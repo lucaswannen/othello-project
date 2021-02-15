@@ -1,0 +1,308 @@
+\section{Conception détaillée}
+
+\subsection{faireUnePartie}
+
+\subsection{obtenirCoup}
+\begin{algorithme}
+  \fonction{obtenirCoup}{plateau : $*$Plateau, joueurCourant : Couleur, mode : $*$\caractere, coupsJ1, coupsJ2 : Coups}{Coup}
+           {
+             coup : Coup\\
+           }
+           {
+             \sialorssinon{mode$=$standard}
+                          {
+                            \sialorssinon{sontEgales(NOIR,joueurCourant)}
+                                         {
+                                           \affecter{coup}{obtenirCoupJoueur(plateau,joueurCourant)}
+                                         }{
+                                           \affecter{coup}{obtenirCoupIA(plateau,joueurCourant,coupsJ1,coupsJ2)}
+                                         }
+                          }{
+                            \affecter{coup}{obtenirCoupIA(plateau,joueurCourant,coupsJ1,coupsJ2)}
+                            \retourner{coup}
+                          }
+           }\\
+\end{algorithme}
+
+
+
+\subsubsection{obtenirCoupIA}
+
+\begin{algorithme}
+  \fonction{obtenirCoupIA}{plateau : $*$Plateau, couleur : Couleur, coupsJ1, coupsJ2 : Coups}{Coup}
+           { cpsPossibles : Coups \\
+             resultat : Coup \\
+             score,alpha,beta,meilleurScore : \entier \\
+             profondeur, i : \naturel \\
+           }
+           {
+             \affecter{cpsPossibles}{coupsPossibles(plateau, couleur)}
+             \affecter{resultat}{iemeCoup(cpsPossibles,1)}
+             \affecter{alpha}{-1000}
+             \affecter{beta}{1000}
+             \affecter{profondeur}{3}
+             \affecter{meilleurScore}{scoreDUnCoup(plateau,resultat,couleur,coupsJ1,coupsJ2,profondeur,alpha,beta)}
+             \pour{i}{2}{nbCoups(cpsPossibles)}{}
+                  {
+                    \affecter{score}{scoreDUnCoup(plateau,iemeCoup(cpsPossibles,i),couleur,coupsJ1,coupsJ2,profondeur,alpha,beta)}
+                    \sialors{score$>$meilleurScore}
+                            {
+                              \affecter{resultat}{iemeCoup(cpsPossibles,i)}
+                              \affecter{meilleurScore}{score}
+                            }
+                    
+                  }
+
+             \retourner{resultat}
+           }\\
+           
+\end{algorithme}
+
+\begin{algorithme}
+  \fonction{alphaBeta}{plateau : $*$Plateau, joueurRef, joueurCourant : Couleur, coupsJ1, coupsJ2 : Coups, profondeur : \naturel, alpha, beta : \entier}{\entier}
+           { cpsPossibles : Coups \\
+             score, resultat : \entier \\
+             i : \naturel
+           }
+           {
+             \affecter{cpsPossibles}{coupsPossibles(plateau, joueurCourant)}
+             \sialors{nbCoups(cpsPossibles)$>$0}
+                     {
+                       \affecter{resultat}{scoreDUnCoup(plateau,iemeCoup(cpsPossibles,1),joueurRef,coupsJ1,coupsJ2,profondeur,alpha,beta)}
+                     }
+                     \pour{i}{2}{nbCoups(cpsPossibles)}{}
+                          {
+                            \affecter{score}{scoreDUnCoup(plateau,iemeCoup(cpsPossibles,i),joueurRef,coupsJ1,coupsJ2,profondeur,alpha,beta)}
+                            \sialorssinon{joueurRef$=$joueurCourant}
+                                         {
+                                           \affecter{resultat}{min(score,resultat)}
+                                           \sialors{resultat $<$ beta}
+                                                   {
+                                                     \affecter{beta}{resultat}
+                                                     \sialors{alpha $>$ beta}
+                                                             {
+                                                               \retourner{resultat}
+                                                             }
+                                                   }
+                                         }
+                                         {
+                                           \affecter{resultat}{max(score,resultat)}
+				           \sialors{resultat $>$ alpha}
+                                                   {
+                                                     \affecter{alpha}{resultat}
+                                                     \sialors{alpha $>$ beta}
+                                                             {
+                                                               \retourner{resultat}
+                                                             }
+                                                   }
+                                         }
+                          }
+                          \retourner{resultat}
+           }\\
+\end{algorithme}
+
+\begin{algorithme}
+  \fonction{scoreDUnCoup}{plateau : $*$Plateau, coup : Coup, joueurRef : Couleur, coupsJ1, coupsJ2 : Coups, profondeur : \naturel, alpha, beta : \entier}{\entier}
+           {
+             copiePlateau : Plateau \\
+           }
+           {
+             copier($@$copiePlateau,$*$plateau)\\
+             jouerCoup($@$copiePlateau,coup,$@$coupsJ1,$@$coupsJ2)\\
+
+             \sialorssinon{partieFinie($@$copiePlateau,coupsJ1,coupsJ2,joueurRef,changerCouleur(joueurRef)) OU profondeur$=$0}
+                          {
+                            \retourner{evaluer(copiePlateau,joueurRef)}
+                          }
+                          {
+                            \retourner{alphaBeta($@$copiePlateau,joueurRef,changerCouleur(joueurRef),coupsJ1,coupsJ2,profonder$-$1,alpha,beta)}
+                          }
+           }\\
+\end{algorithme}
+
+\subsubsection{obtenirCoupJoueur}
+\begin{algorithme}
+  \fonction{obtenirCoupJoueur}{plateau : $*$Plateau, joueurCourant : Couleur}{Coup}
+           {
+             coup : Coup \\
+             estCoupValide : \booleen
+           }
+           {
+             \affecter{estCoupValide}{faux}
+             \tantque{estCoupValide$=$faux}
+                     {
+                       \affecter{coup}{IHM\_saisirCoup(joueurCourant)}
+                       \affecter{estCoupValide}{estPresent(coupsPossibles(plateau,joueurCourant),coup)}
+                     }
+                     \retourner{coup}
+           }\\
+\end{algorithme}
+
+
+\subsection{partieFinie}
+
+\begin{algorithme}
+  \fonction{calculerScore}{coups : Coups}{\naturel}
+           {
+           }
+           {
+             \retourner{nbCoups(coups)}
+           }\\
+  
+\end{algorithme}
+
+\begin{algorithme}
+  \fonction{peutJouer}{plateau : $*$Plateau, joueur : Couleur}{\booleen}
+           {
+           }
+           {
+             \retourner{nbCoups(coupsPossibles(plateau,joueur)$>$0)}
+           }\\
+\end{algorithme}
+
+\begin{algorithme}
+  \fonction{gagnant}{joueur1, joueur2 : Couleur, coupsJ1, coupsJ2 : Coups}{retourGagnant}
+           {
+             resultat : retourGagnant
+           }
+           {
+             \affecter{resultat.couleurGagnant}{VIDE}
+             \affecter{resultat.egalite}{faux}
+             \affecter{resultat.scoreGagnant}{0}
+             \sialorssinon{calculerScore(coupsJ1)$=$calculerScore(coupsJ2)}
+                          {
+                            \affecter{resultat.egalite}{vrai}
+                            \affecter{resultat.scoreGagnant}{calculerScore(coupsJ1)}
+                          }
+                          {
+                            \sialorssinon{calculerScore(coupsJ1)$<$calculerScore(coupsJ2)}
+                                         {
+                                           \affecter{resultat.egalite}{false}
+                                           \affecter{resultat.couleurGagnant}{joueur2}
+                                           \affecter{resultat.scoreGagnant}{calculerScore(coupsJ2)}
+                                         }
+                                         {
+                                           \affecter{resultat.egalite}{false}
+                                           \affecter{resultat.couleurGagnant}{joueur1}
+                                           \affecter{resultat.scoreGagnant}{calculerScore(coupsJ1)}
+                                         }
+                          }
+                          \retourner{resultat}
+           }\\
+\end{algorithme}
+\begin{algorithme}
+  \fonction{partieFinie}{plateau : $*$Plateau, coupsJ1,coupsJ2 : Coups, joueur1,joueur2 : Couleur}{retourPartieFinie}
+           {
+             resultat : retourPartieFinie\\
+             rGagnant : retourGagnant\\
+             partieFinie : \booleen
+           }
+           {
+             \affecter{partieFinie}{faux}
+             \sialorssinon{estRempli($*$plateau) OU (peutJouer(plateau,joueur1)=faux ET peutJouer(plateau,joueur2))}
+                          {
+                            \affecter{partieFinie}{vrai}
+                            \affecter{rGagnant}{gagnant(joueur1,joueur2,coupsJ1,coupsJ2)}
+                          }{
+                            \affecter{rGagnant}{gagnant(joueur1,joueur2,coupsJ1,coupsJ2)}
+                          }
+                          \affecter{resultat.partieFinie}{partieFinie}
+                          \affecter{resultat.couleurGagnant}{rGagnant.couleurGagnant}
+                          \affecter{resultat.egalite}{rGagnant.egalite}
+                          \affecter{resultat.scoreGagnant}{scoreGagnant}
+                          \retourner{resultat}
+           }\\
+\end{algorithme}
+
+
+\subsection{coupsPossibles}
+
+\begin{algorithme}
+  \fonction{testCoup}{coup : Coup, plateau : Plateau}{\booleen}
+           {
+             i,j,k,abscisse,ordonnee,newAbscisse,newOrdonnee : \entier\\
+             couleurCaseATester, couleurJoueur : Couleur \\
+             positionTestee : Position\\
+             resultat : \booleen
+           }
+           {
+             \affecter{couleurJoueur}{obtenirCouleur(obtenirPion(coup))}
+             \affecter{resultat}{faux}
+             \affecter{abscisse}{obtenirAbscisse(obtenirPosition(coup))}
+             \affecter{ordonnee}{obtenirOrdonnee(obtenirPosition(coup))}
+             \sialors{caseVide(plateau,obtenirPosition(coup))$=$vrai}
+                     {
+                       \affecter{i}{-1}
+                       \tantque{i$<$2 ET resultat$=$faux}
+                               {
+                                 \affecter{j}{-1}
+                                 \tantque{j$<$2 ET resultat$=$faux}
+                                         {
+                                             \sialors{(1\leq(abscisse$+$1)) ET ((abscisse$+$i)\leq8) ET (1\leq(ordonnee$+$j)) ET ((ordonnee+j)\leq8)}
+                                         {
+                                           \affecter{positionTestee}{position(abscisse$+$i,ordonne$+$j)}
+                                           \sialors{caseVide(plateau,positionTestee)$=$faux}
+                                                   {
+                                                     \affecter{couleurCaseATester}{obtenirCouleur(obtenirPion(plateau,positionTestee))}
+                                               
+                                                   \sialors{sontEgales(couleurCaseATester,couleurJoueur)$=$faux}
+                                                           {
+                                                             \affecter{newAbscisse}{abscisse$+(2*i)$}
+                                                             \affecter{newOrdonnee}{ordonnee$+2*j$}
+                                                             \tantque{resultat$=$faux ET (1\leq newAbscisse) ET (newAbscisse\leq8) ET (1\leq newOrdonnee) ET (newOrdonnee\leq8) ET\\ caseVide(plateau,position(newAbscisse,newOrdonnee))}
+                                                                     {
+                                                                       \affecter{resultat}{sontEgales(obtenirCouleur(obtenirPion(plateau,\\position(newAbscisse,newOrdonnee))),couleurJoueur)}
+                                                                       \affecter{k}{k+1}
+                                                                       \affecter{newAbscisse}{newAbscisse$+$i}
+                                                                       \affecter{newOrdonnee}{newOrdonne$+$j}
+                                                                     }
+                                                           }
+                                         }
+                                         }
+                                         \affecter{j}{j$+$1}
+                                         }
+                                         \affecter{i}{i$+$1}
+                               }
+                     }
+                     \retourner{resultat}
+           }\\
+\end{algorithme}
+
+\begin{algorithme}
+  \fonction{coupPossible}{coup : Coup, plateau: $*$Plateau}{\booleen}
+           {
+           }
+           {
+             \retourner{(estValide(coup) ET caseVide($*$plateau,obtenirPosition(coup)) ET testCoup(coup,$*$plateau))}
+           }\\
+\end{algorithme}
+
+\begin{algorithme}
+  \fonction{coupsPossibles}{plateau : $*$Plateau, couleurJoueur : Couleur}{Coups}
+           {
+             resultat : Coups\\
+             i,j : \naturel\\
+             coupAtester : Coup
+           }
+           {
+             \pour{i}{1}{8}{}
+                  {
+                    \pour{j}{1}{8}{}
+                         {
+                           \affecter{coupAtester}{coup(pion(couleurJoueur),position(i,j))}
+                           \sialors{coupPossible(coupAtester,plateau)}
+                                   {
+                                     ajouter($@$resultat,coupAtester)
+                                   }
+                         }
+                  }
+                  \retourner{resultat}
+           }
+\end{algorithme}
+
+
+
+
+
+
+

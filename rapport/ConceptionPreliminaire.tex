@@ -1,0 +1,130 @@
+\section{Conception préliminaire}
+
+\subsection{Signatures des opérations de chaque TAD}
+\subsubsection{TAD Couleur}
+    \begin{algorithme}
+        \signatureFonction{noir}{}{Couleur}
+        \signatureFonction{blanc}{}{Couleur}
+        \signatureProcedure{changerCouleur}{
+            \paramEntreeSortie couleur : Couleur
+            }
+    \end{algorithme}
+\subsubsection{TAD Pion}
+    \begin{algorithme}
+        \signatureFonction{pion}{Couleur}{Pion}
+        \signatureFonction{obtenirCouleur}{Pion}{Couleur}
+        \signatureProcedure{retournerPion}{
+            \paramEntreeSortie pion : Pion
+            }
+    \end{algorithme}
+\subsubsection{TAD Position}
+    \begin{algorithme}
+        \signatureFonction{position}{abcisse : [\![1..8]\!], coordonnee : [\![a..h]\!] }{Position}
+        \signatureFonction{obtenirAbcisse}{Position}{[\![1..8]\!]}
+        \signatureFonction{obtenirOrdonnee}{Position}{[\![a..h]\!]}
+    \end{algorithme}
+\subsubsection{TAD Plateau}
+    \begin{algorithme}
+        \signatureFonction{plateau}{}{Plateau}
+        \signatureProcedureAvecPreconditions{poserPion}{
+            \paramEntree unPion : Pion, pos : Position
+            \paramEntreeSortie plateau : Plateau
+            }{caseEstVide(pos, plateau)}
+        \signatureProcedureAvecPreconditions{enleverPion}{
+            \paramEntree pos : Position
+            \paramEntreeSortie plateau : Plateau
+            }{non(caseEstVide(pos, plateau))}
+        \signatureProcedureAvecPreconditions{retournerPion}{
+            \paramEntree pos : Position
+            \paramEntreeSortie plateau : Plateau
+            }{non(caseEstVide(pos, plateau))}
+        \signatureFonctionAvecPreconditions{obtenirPion}{pos : Position, plateau : Plateau}{Pion}{non(caseEstVide(pos, plateau))}
+        \signatureFonction{caseEstVide}{pos : Position, plateau : Plateau}{\booleen}
+\end{algorithme}
+\subsubsection{TAD Coup}
+    \begin{algorithme}
+        \signatureFonction{coup}{unPion : Pion, pos : Position}{Coup}
+        \signatureFonction{obtenirPion}{unCoup : Coup}{Pion}
+        \signatureFonction{obtenirPosition}{unCoup : Coup}{Position}
+        \signatureFonction{estValide}{unCoup : Coup}{\booleen}
+\end{algorithme}
+
+\subsubsection{TAD Coups}
+    \begin{algorithme}
+        \signatureFonction{coups}{}{Coups}
+        \signatureFonction{estCoupValide}{lesCoups : Coups, unCoup : Coup}{\booleen}
+        \signatureFonctionAvecPreconditions{iemeCoup}{lesCoups: Coups, i : NaturelNonNul}{Coup}{i $\leq$ nbCoups(lesCoups)}
+        \signatureProcedure{ajouter}{
+        \paramEntreeSortie lesCoups: Coups
+        \paramEntree unCoup : Coup
+        }
+        \signatureFonction{estPresent}{lesCoups : Coups, unCoup : Coup}{\booleen}
+        \signatureFonction{nbCoups}{lesCoups : Coups}{Naturel}
+    \end{algorithme}
+    \subsection{Conception des TAD}
+    Dans cette partie nous allons décrire comment sont représentés les TAD réperés lors de la phase d'analyse. La question la plus importante qui se pose c'est le choix entre une structure de données statique (tableau) et une structure de données dynamique (liste chainée ou arbre binaire) en fonction de nos besoins, tout en restant dans une compléxité gérable lors du dévéloppement en C.
+    \subsubsection{TAD Couleur}
+    Pour le \textbf{TAD Couleur} une représentation par une énumeration nous semble la plus efficace, étant donné que l'ensemble des valeurs d'une couleur est un ensemble dénombrable, discrèt: une couleur peut etre soit \textit{blanc} soit \textit{noir}. \\
+    
+    \textbf{typedef enum} Couleur \{BLANC,NOIR\} Couleur;
+    \subsubsection{TAD Pion}
+    Pour le \textbf{TAD Pion} une représentation par une structure contenant un seul champ (couleur) nous semble suffisant car, en effet, un pion se définit qu'à partir d'une couleur.
+    \subsubsection{TAD Position}
+    Pour le \textbf{TAD Position} une représentation par une structure contenant deux champs (abcisse et ordonnee) nous semble suffisant car, en effet, pour définir une position nous avons simplement besoin de l'indice de la ligne et de la colonne dans la grille..
+    \subsubsection{TAD Plateau}
+    Pour le \textbf{TAD Plateau} une représentation par une structure contenant un seul champ (cases) qui sera un dictionnaire ayant pour clés un tuple \textit{(x,y)} designant la position et comme valeur un pion nous semble la plus efficace. En effet, cette représentation nous facilitera le développement en ce qui concerne l'implémentation des opérations. Par example, pour l'opération \textit{obtenirPion} il nous suffira de retourner la valeur correspondante de la clé (une position), car ainsi nous aurons la valeur, soit le pion. De même, pour l'opération \textit{caseEstVide} il nous suffira de vérifier si la valeur retournée est un tuple vide ou pas. Pourtant, vu que nous allons dévélopper notre programme dans le langage C, ceci nous impose de laisser cette idée de côté pour le cas où nous serons en Python, car les dictionnaires sont difficile à conçevoir et à gérer en C.
+    Enfin, nous avons choisi de faire une représentation par un tableau à deux dimensions.
+    \subsubsection{TAD Coup}
+    Pour le \textbf{TAD Coup} une représentation par une structure contenant deux champs (pion et position) nous semble suffisant car, en effet, à partir de cette représentation nous pourrons facilement obtenir un pion ou une position à partir d'un coup. De même, nous pourrons vérifier si un coup est valide simplement en vérifiant si la position où il devrait se positionner est déjà prise.
+    \subsubsection{TAD Coups }
+    Pour le \textbf{TAD Coups} une représentation par une structure contenant deux champs (lesCoups et nbCoups), où le premier champ sera une liste chainée nous semble la plus adéquate, car ce TAD est en fait un ensemble des coup avec un ordre (imposé par l'opération \textit{iemeCoup}). Pourtant, nous pouvons faire plus simple par représentant le premier champ par un tableau à une dimension.
+    \newpage
+    
+ \subsection{Conception préliminaires des fonctions de l'Analyse Descendante}
+    \subsubsection {Fonction initialiser}
+        \begin{algorithme}
+        \signatureFonction{initialiser}{plateau : Plateau, coupsJ1 : Coups, coupsJ2 : Coups}{plateau}
+        \end{algorithme}
+    \subsubsection {Procedure jouerCoup}
+        \begin{algorithme}
+        \signatureProcedure{jouerCoup}{plateau : Plateau, coup : Coup, coupsJ1 : Coups, coupsJ2 : Coups}
+        \end{algorithme}
+    \subsubsection {Fonction obtenirCoup}
+        \begin{algorithme}
+        \signatureFonction{obtenirCoup}{plateau : Plateau, couleur : Couleur, mode : $*$\caractere, coupsJ1 : Coups, coupsJ2 : Coups}{coup}
+        \end{algorithme}
+    \subsubsection {Fonction obtenirCoupIA}
+        \begin{algorithme}
+        \signatureFonction {evaluer}{plateau : Plateau, couleur : Couleur}{Entier}
+        \signatureFonction {scoreDUnCoup}{plateau : Plateau, coup : Coup, couleur : Couleur, coupsJ1 : Coups, coupsJ2 : Coups, profondeur : Entier, alpha : Entier, beta : Entier}{Entier}
+        \signatureFonction {alphaBeta}{plateau : Plateau, coup : Coup, joueurRef : Couleur, joueurCourant : Couleur, coupsJ1 : Coups, coupsJ2 : Coups, profondeur : Entier, alpha : Entier, beta : Entier}{Entier}
+        \signatureFonction {obtenirCoupIA}{plateau : Plateau, couleur : Couleur, coupsJ1 : Coups, coupsJ2 : Coups}{Coup}
+        \end{algorithme}
+    \subsubsection {Fonction obtenirCoupJoueur}
+        \begin{algorithme}
+        \signatureFonction {obtenirCoupJoueur}{plateau : Plateau, joueurCourant : Couleur}{Coup}
+        \end{algorithme}
+    \subsubsection {Procedure retournerPions}
+        \begin{algorithme}
+        \signatureProcedure {retournerPionsDansUneDirection}{plateau : Plateau, coup : Coup, coupsJ1 : Coups, coupsJ2 : Coups, abscisse\_direction : \entier, ordonnee\_direction : \entier}
+        \signatureProcedure {retournerPions}{plateau : Plateau, coup : Coup, coupsJ1 : Coups, coupsJ2 : Coups}
+        \end{algorithme}
+    \subsubsection {Fonction partieFinie}
+        \begin {algorithme}
+        \signatureFonction {gagnant}{joueur1 : Couleur, joueur2 : Couleur, coupsJ1 : Coups, coupsJ2 : Coups}{gagnant}
+        \signatureFonction {partieFinie}{plateau : Plateau, coupsJ1 : Coups, coupsJ2 : Coups, joueur1 : Couleurs, joueur2 : Couleur}{PartieFinie}
+        \end{algorithme}
+    \subsubsection {Fonction coupsPossibles}
+        \begin{algorithme}
+        \signatureFonction {testCoup}{coup : Coup, plateau : Plateau}{Bouleen}
+        \signatureFonction {coupPossible}{coup : Coup, plateau : Plateau}{Bouleen}
+        \signatureFonction {coupsPossibles}{plateau : Plateau, couleurJoueur : Couleur}{Coups}
+        \end{algorithme}
+    \subsubsection {IHM}
+        \begin{algorithme}
+        \signatureProcedure {IHM\_affichagePlateau}{plateau : Plateau}
+        \signatureFonction {IHM\_saisirCoup}{couleurJoueur : Couleur}{Coup}
+        \end{algorithme}
+
+    
+

@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{algorithmeUTF8}
+\usepackage{color}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage[margin=3cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath,amssymb,amsfonts,mathrsfs}
+\usepackage{caption}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{multirow}
+\hypersetup{breaklinks=true}
+\def\UrlBreaks{\do\/\do-\do?\do0}
+\hypersetup{hidelinks}
+\definecolor{mypink1}{rgb}{0.858, 0.188, 0.478}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage[colorlinks=true , linkbordercolor=white , linkcolor=blue]{hyperref}
+\usemintedstyle{borland}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+
+
+\author{}
+\date{Octobre 2019}
+
+\pagestyle{fancy}
+\fancyhead[L]{}
+
+\begin{document}
+\begin{titlepage}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=7cm]{logo.jpg}
+\end{figure}
+\begin{center}
+    \HRule \\[0.4cm]
+{ \huge \bfseries Rapport de projet d'algorithmique}\\[0.4cm]
+\HRule \\[0.5cm]
+{\Large{Jeu Othello}\\
+\vspace{2cm}}
+{\large \makeatletter
+\@date
+\makeatother}
+\end{center}
+
+\vspace{6cm}
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Auteurs:}\\
+Mathias \textsc{VAN AUDENHOVE} \\
+Lucas \textsc{WANNENMACHER} \\
+Sipeng \textsc{ZHENG} \\
+Maria-Bianca \textsc{ZUGRAVU} \\
+
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Enseignant:} \\
+Nicolas \textsc{DELESTRE} \\
+\end{flushright}
+\end{minipage}
+\end{titlepage}
+
+
+\newpage
+\tableofcontents
+\newpage
+\input{Introduction}
+\section{Analyse Descendante}
+
+
+\begin{figure}[h]
+\caption{Analyse Descendante}
+\centering
+\includegraphics[width=1.1\textwidth]{analyseDescendante.jpg}
+\end{figure}
+
+\newpage
+\input{TAD.tex}
+\input{ConceptionPreliminaire.tex}
+\newpage
+\input{ConceptionDetaillee.tex}
+\newpage
+\input{Repartition.tex}
+\newpage
+\input{ConclusionBilan.tex}
+\newpage
+\input{CodeC.tex}
+\newpage
+\section{Liens utiles}
+\textit{Lien pour comprendre la stratégie du jeu : }
+\url{http://www.ffothello.org/documents/Livret.pdf}\\
+
+\textit{Lien d'où nous nous sommes inspirés pour la matrice d'évaluation du plateau :}
+\url{http://imagine.enpc.fr/~monasse/Info/Projets/2003/othello.pdf}\\
+
+\textit{Lien vers le cours d'I3 d'où nous nous sommes inspirés pour mieux comprendre la logique de l'algorithme Min-Max :}
+\url{file:///tmp/mozilla_bianca0/14-Puissance4IA.pdf}\\
+
+\textit{Lien vers différentes variations de l'algorithme AlphaBeta :}
+\url{http://www.ffothello.org/informatique/algorithmes/}\\
+
+\end{document}

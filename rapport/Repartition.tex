@@ -1,0 +1,108 @@
+\section{Gestion de projet}
+\subsection{Suivi chronologique}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|l|}
+\hline
+Séance                                                     & Date                                                              & Travail réalisé                                                                                                                                                  \\ \hline
+1                                                          & 16/10/2019                                                        & Étude du sujet, mise en place de la gestion de projet
+                                                                                          \\ \hline
+2                                                          & 23/10/2019                                                        & Analyse : spécification des TAD  
+                                                                                          \\ \hline
+3                                                          & 6/11/2019                                                        & Analyse : analyse descendante 
+                                                                                          \\ \hline
+4                                                          & 13/11/2019                                                        & Conception préliminaire 
+                                                                                          \\ \hline
+5                                                          & 20/11/2019                                                        & Conception détaillée
+                                                                                          \\ \hline
+6                                                          & 27/11/2019                                                        & Développement 
+                                                                                          \\ \hline
+7                                                          & 4/12/2019                                                        & Développement et tests unitaires 
+                                                                                          \\ \hline
+8                                                          & 11/12/2019                                                        & Développement et tests unitaires
+                                                                                          \\ \hline
+9                                                          & Vacances de Noël                                                        & Développement et tests unitaires - Phase finale 
+                                                                                          \\ \hline
+10                                                          & 7/1/2020                                                        & Dépôt des livrables sur moodle 
+                                                                                          \\ \hline
+\end{tabular}
+\end{table}
+
+\textbf{La mise à jour du rapport a été faite tout au long de l'avancement.}
+
+\subsection{Répartition des tâches}
+
+\textbf{Signification des acronymes}
+\begin{itemize}
+  \item MVA : Mathias Van Audenhove
+  \item LW : Lucas Wannenmacher
+  \item SZ : Sipeng Zheng
+  \item MBZ : Maria-Bianca Zugravu
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l|c|c|c|c|}
+
+\cline{2-5}
+                                                        & MVA & LW & SZ & MBZ \\ \hline
+\multicolumn{1}{|l|}{Analyse descendante}               & X                     & X              & X                     & X                      \\ \hline
+\multicolumn{1}{|l|}{README.txt}                        & \multicolumn{1}{l|}{} & X              & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{}  \\ \hline
+\multicolumn{1}{|l|}{makefile}                          &                       & X               &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Couleur.c}                         &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Pion.c}                            &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Position.c}                        &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Coup.c}                            &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Coups.c}                           &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Plateau.c}                         &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{faireUnePartie.c}                  &                       &                &                       & X                       \\ \hline
+\multicolumn{1}{|l|}{main.c}                  &                       &                &                       & X                       \\ \hline
+\multicolumn{1}{|l|}{initialisation.c}                  & X                     &                &                       &                        \\ \hline
+\multicolumn{1}{|l|}{jouerCoup.c}                       &                       & X               &                       &                        \\ \hline
+\multicolumn{1}{|l|}{partieFinie.c}                     &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{peutJouer}                         &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{gagnant}                           &                       &                &                       & X                      \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l|c|c|c|c|}
+
+\cline{2-5}
+& MVA & LW & SZ & MBZ \\ \hline
+\multicolumn{1}{|l|}{calculerScore.c}                   &                       &                & X                     &                        \\ \hline
+\multicolumn{1}{|l|}{obtenirCoup.c}                     &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupIA.c}                   &                       &                & X                     &                        \\ \hline
+\multicolumn{1}{|l|}{alphaBeta}                         &                       &                & X                      & X                      \\ \hline
+\multicolumn{1}{|l|}{scoreDUnCoup}                      &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{evaluer}                           & X                      & X               &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupJoueur.c}               &                       & X              &                       &                        \\ \hline
+\multicolumn{1}{|l|}{coupsPossibles.c}                  & X                     &                &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testCoup}                          & X                     &                &                       &                        \\ \hline
+\multicolumn{1}{|l|}{coupPossible}                      & X                     &                &                       &                        \\ \hline
+\multicolumn{1}{|l|}{retournerPions.c}                  &                       & X              &                       &                        \\ \hline
+\multicolumn{1}{|l|}{retournerPionsDansUneDirection}    &                       & X              &                       &                        \\ \hline
+\multicolumn{1}{|l|}{IHM\_affichagePlateau}              &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{IHM\_saisirCoup}                   &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Rapport}                           &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Rapport/Conclusion}                           & X                      &                &                       &                       \\ \hline
+\multicolumn{1}{|l|}{Rapport/Conception préliminaire fonctions}                           & X                      &                &                       &                       \\ \hline
+\multicolumn{1}{|l|}{Documentation}                     & X                      & X              &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testTADCouleur.c}                         &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{testTADPion.c}                            &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{testTADPosition.c}                        &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{testTADCoup.c}                            &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{testTADCoups.c}                           &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{testTADPlateau.c}                         &                       &                &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{testCoupsPossibles.c}                     & X                     &                &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testJouerCoup.c}                          &                       & X              &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testRetournerPions.c}                     &                       & X              &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testRetournerPionsDansUneDirection.c}     &                       & X              &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testObtenirCoupIA.c}     &                       &               &                       & X                        \\ \hline
+\multicolumn{1}{|l|}{testRetournerObtenirCoupJoueur.c}     &                       &               &                       & X                       \\ \hline
+\end{tabular}
+\end{table}
+\newpage

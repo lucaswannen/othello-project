@@ -1,0 +1,157 @@
+% ----------------------------------------------- TAD Couleur --------------------------------------------
+
+\begin{tad}
+\tadNom{Couleur}
+\tadParametres{}
+\tadDependances{}
+\begin{tadOperations}{Couleur}
+    \tadOperation{blanc}{}{\tadUnParam{Couleur}}
+    \tadOperation{noir}{}{\tadUnParam{Couleur}}
+    \tadOperation{changerCouleur}{\tadUnParam{Couleur}{}}{\tadUnParam{Couleur}}
+\end{tadOperations}
+\begin{tadSemantiques}{Couleur}
+\tadSemantique{changerCouleur}{L’opération qui permet de changer la couleur}
+\end{tadSemantiques}
+\begin{tadAxiomes}
+    \tadAxiome{changerCouleur(blanc) = noir}
+    \tadAxiome{changerCouleur(noir) = blanc}
+\end{tadAxiomes}
+\end{tad} 
+\begin{center}
+ \HRule \\[0.4cm]   
+\end{center}
+
+% ------------------------------------------------- TAD PION -----------------------------------------------
+\begin{tad}
+\tadNom{Pion}
+\tadParametres{}
+\tadDependances{Couleur}
+\begin{tadOperations}{Pion}
+    \tadOperation{pion}{\tadUnParam{Couleur}{}}{\tadUnParam{Pion}}
+    \tadOperation{obtenirCouleur}{\tadUnParam{Pion}{}}{\tadUnParam{Couleur}}
+    \tadOperation{retournerPion}{\tadUnParam{Pion}{}}{\tadUnParam{Pion}}
+\end{tadOperations}
+\begin{tadSemantiques}{Couleur}
+    \tadSemantique{obtenirCouleur}{L’opération qui permet d'obtenir la couleur d'un pion.}
+    \tadSemantique{retournerPion}{L’opération qui permet de retourner un pion de l'adversaire, c'est à dire l'encadrer par deux pions à nous et de changer sa couleur. }
+\end{tadSemantiques}
+\begin{tadAxiomes}
+    \tadAxiome{obtenirCouleur(pion(c)) = c}
+    \tadAxiome{retournerPion(retournerPion(p)) = p}
+\end{tadAxiomes}
+\end{tad}
+\begin{center}
+ \HRule \\[0.4cm]   
+\end{center}
+% --------------------------------------------- TAD POSITION ------------------------------------------------
+\begin{tad}
+\tadNom{Position}
+\tadParametres{}
+\tadDependances{[\![1..8]\!], [\![a..h]\!]}
+\begin{tadOperations}{Position}
+    \tadOperation{position}{\tadDeuxParams{[\![1..8]\!]}{[\![a..h]\!]}}{\tadUnParam{Position}}
+    \tadOperation{obtenirAbcisse}{\tadUnParam{Position}{}}{\tadUnParam{[\![1..8]\!]}}
+    \tadOperation{obtenirOrdonnée}{\tadUnParam{Position}{}}{\tadUnParam{[\![a..h]\!]}}
+\end{tadOperations}
+\begin{tadSemantiques}{Position}
+    \tadSemantique{obtenirAbcisse}{L’opération qui permet d'obtenir l'abcisse d'une position, c'est à dire la ligne sur laquelle on se positionne.}
+    \tadSemantique{obtenirOrdonnée}{L’opération qui permet d'obtenir l'ordonnée d'une position, c'est à dire la colonne sur laquelle on se positionne.}
+\end{tadSemantiques}
+\begin{tadAxiomes}
+    \tadAxiome{obtenirAbcisse(position(i,j)) = i où i $\in$ [\![1..8]\!]}
+    \tadAxiome{obtenirOrdonnée(position(i,j)) = j où j $\in$ [\![a..h]\!]}
+\end{tadAxiomes}
+\end{tad}
+\newpage
+% -------------------------------------------- TAD PLATEAU ---------------------------------------------
+\begin{tad}
+\tadNom{Plateau}
+\tadParametres{}
+\tadDependances{Pion, Position, Booléen}
+\begin{tadOperations}{Plateau}
+    \tadOperation{plateau}{}{\tadUnParam{Plateau}}
+    \tadOperationAvecPreconditions{poserPion}{\tadTroisParams{Pion}{Position}{Plateau}}{\tadUnParam{Plateau}}
+    \tadOperationAvecPreconditions{enleverPion}{\tadDeuxParams{Position}{Plateau}}{\tadUnParam{Plateau}}
+    \tadOperationAvecPreconditions{retournerPion}{\tadDeuxParams{Position}{Plateau}}{\tadUnParam{Plateau}}
+    \tadOperationAvecPreconditions{obtenirPion}{\tadDeuxParams{Position}{Plateau}}{\tadUnParam{Pion}}
+    \tadOperation{caseEstVide}{\tadDeuxParams{Position}{Plateau}}{\tadUnParam{Booléen}}
+\end{tadOperations}
+\begin{tadSemantiques}{Couleur}
+    \tadSemantique{poserPion}{L’opération qui permet de poser un pion sur un plateau.}
+    \tadSemantique{enleverPion}{L’opération qui permet d'enlever un pion depuis un plateau.}
+    \tadSemantique{retournerPion}{L’opération qui permet de retourner un pion sur un plateau à partir de sa position.}
+    \tadSemantique{obtenirPion}{L’opération qui permet d'obtenir un pion en fonction de sa position sur un plateau.}
+    \tadSemantique{caseEstVide}{L’opération qui permet de vérifier si la case définie par une position sur le plateau est vide.}
+\end{tadSemantiques}
+\begin{tadPreconditions}{Plateau}
+    \tadPrecondition{poserPion(p,pos,plateau)} \textit{caseEstVide(pos,plateau)}
+    \tadPrecondition{enleverPion(pos,plateau)}  \textit{non(caseEstVide(pos,plateau))}
+    \tadPrecondition{retournerPion(pos,plateau)} \textit{non(caseEstVide(pos,plateau))}
+    \tadPrecondition{obtenirPion(pos,plateau)} \textit{non(caseEstVide(pos,plateau))}
+\end{tadPreconditions}
+\begin{tadAxiomes}
+    \tadAxiome{obtenirPion(pos,poserPion(p,pos,plateau)) = p}
+    \tadAxiome{retournerPion(pos,retournerPion(pos,plateau)) = plateau}
+    \tadAxiome{caseEstVide(pos,plateau())}
+    \tadAxiome{caseEstVide(pos,enleverPion(pos,plateau))}
+    \tadAxiome{non caseEstVide(pos,poserPion(p,pos,plateau))}
+\end{tadAxiomes}
+\end{tad}
+\begin{center}
+ \HRule \\[0.4cm]   
+\end{center}
+% --------------------------------------------- TAD COUP -------------------------------------------------
+\begin{tad}
+\tadNom{Coup}
+\tadParametres{}
+\tadDependances{Pion, Position, Booléen}
+\begin{tadOperations}{Coup}
+    \tadOperation{coup}{\tadDeuxParams{Pion}{Position}}{\tadUnParam{Coup}}
+    \tadOperation{obtenirPion}{\tadUnParam{Coup}{}}{\tadUnParam{Pion}}
+    \tadOperation{obtenirPosition}{\tadUnParam{Coup}{}}{\tadUnParam{Position}}
+    \tadOperation{estValide}{\tadUnParam{Coup}{}}{\tadUnParam{Booléen}}
+\end{tadOperations}
+\begin{tadSemantiques}{Coup}
+    \tadSemantique{obtenirPion}{L’opération qui permet d'obtenir le pion correspondant à un coup.}
+    \tadSemantique{obtenirPosition}{L’opération qui permet d'obtenir la position correspondante à un coup.}
+    \tadSemantique{estValide}{L’opération qui permet de vérifier si un coup est valide, c'est à dire s'il n'est pas en dehors des limites du plateau.}
+\end{tadSemantiques}
+\begin{tadAxiomes}
+    \tadAxiome{obtenirPion(coup(p,pos)) = p}
+    \tadAxiome{obtenirPosition(coup(p,pos)) = pos}
+\end{tadAxiomes}
+\end{tad}
+
+\newpage
+% -------------------------------------- TAD COUPS -----------------------------------------------------------
+\begin{tad}
+\tadNom{Coups}
+\tadParametres{Coup}
+\tadDependances{Coup, Booléen, Naturel, NaturelNonNul}
+\begin{tadOperations}{Coups}
+    \tadOperation{coups}{}{\tadUnParam{Coups}}
+    \tadOperation{estCoupValide}{\tadDeuxParams{Coups}{Coup}}{\tadUnParam{Booléen}}
+    \tadOperationAvecPreconditions{iemeCoup}{\tadDeuxParams{Coups}{NaturelNonNul}}{\tadUnParam{Coup}}
+    \tadOperation{ajouter}{\tadDeuxParams{Coups}{Coup}}{\tadUnParam{Coups}}
+    \tadOperation{estPrésent}{\tadDeuxParams{Coups}{Coup}}{\tadUnParam{Booléen}}
+    \tadOperation{nbCoups}{\tadUnParam{Coups}{}}{\tadUnParam{Naturel}}
+\end{tadOperations}
+
+\begin{tadSemantiques}{Coups}
+    \tadSemantique{estCoupValide}{L’opération qui permet de vérifier qu'un coup est valide, c'est à dire s'il n'a pas été déjà fait et si sa position est conforme par rapports à celles d'autres pions y compris les pions adversaires.}
+    \tadSemantique{iemeCoup}{L'opération qui permet d'obtenir l'ième coup.}
+    \tadSemantique{ajouter}{L'opération qui permet d'ajouter un nouveau coup dans l'ensemble des coups.}
+    \tadSemantique{estPrésent}{L'opération qui permet de vérifier si un coup a été déjà fait.}
+    \tadSemantique{nbCoups}{L'opération qui permet de compter combien des coups on été faits en total.}
+\end{tadSemantiques}
+\begin{tadPreconditions}
+    \tadPrecondition{iemeCoup(cps,i)} \textit{i $\leq$ nbCoups(cps)}
+\end{tadPreconditions}
+\begin{tadAxiomes}
+    \tadAxiome{estCoupValable(cps,coup(p,pos))} \textit{ non estPrésent(cps,coup)} et \textit{estValide(coup)}
+    \tadAxiome{ajouter(cps,coup)} \textit{nbCoups(cps) = nbCoups(cps) + 1}
+    \tadAxiome{nbCoups(cps()) = 0}
+    \tadAxiome{iemeCoup(ajouter(cps,coup),i) = coup}
+\end{tadAxiomes}
+\end{tad}
+\newpage

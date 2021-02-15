@@ -1,0 +1,60 @@
+\subsection{Répartition des tâches}
+
+\textbf{Signification des acronymes}
+\begin{itemize}
+  \item MVA : Mathias Van Audenhove
+  \item LW : Lucas Wannenmacher
+  \item SZ : Sipeng Zheng
+  \item MBZ : Maria-Bianca Zugravu
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l|c|c|c|c|c|}
+
+\cline{2-6}
+                                                        & RC & AH & ML & OQ & YZA \\ \hline
+\multicolumn{1}{|l|}{Analyse descendante}               & X                     & X              & X                     & X                     & X                      \\ \hline
+\multicolumn{1}{|l|}{README.txt}                        & \multicolumn{1}{l|}{} & X              & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{}  \\ \hline
+\multicolumn{1}{|l|}{makefile}                          &                       & X              & X                     & X                     & X                      \\ \hline
+\multicolumn{1}{|l|}{Couleur.h}                         &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Pion.h}                            &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Position.h}                        & X                     &                &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Coup.h}                            &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Coups.h}                           &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Plateau.h}                         &                       &                &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{mettreAJourPlateau(Prive).h}       & X                     &                &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupsPossibles.h}           &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupJoueur.h}               &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupIA(Prive).h}            &                       &                &                       &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{faireUnePartiePrive.h}             &                       &                &                       &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{faireUnePartie.h}                  &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{IHM.h}                             &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Couleur.c}                         &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Pion.c}                            &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Position.c}                        & X                     &                &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Coup.c}                            &                       & X              &                       &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Coups.c}                           &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Plateau.c}                         &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{mettreAJourPlateau.c}              & X                     &                &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupsPossibles.c}           &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupJoueur.c}               &                       &                &                       &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{obtenirCoupIA.c}                   &                       &                &                       &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{faireUnePartie.c}                  &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{IHM.c}                             &                       &                &                       & X                     &                        \\ \hline
+\multicolumn{1}{|l|}{main.c}                            &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testTAD(tous).c}             &                       &                &                       & X                     &                        \\ \hline
+\multicolumn{1}{|l|}{testMettreAJourPlateau.c}          &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testObtenirCoupsPossibles.c}       &                       &                &                       & X                     &                        \\ \hline
+\multicolumn{1}{|l|}{testObtenirCoupJoueur.c}           &                       &                &                       &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{testObtenirCoupIA.c}               & X                     &                &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testFaireUnePartie.c}              &                       &                & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{testIHM.c}                         &                       & X              &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Rapport - Intro/Conclusion}        &                       &                &                       &                       & X                      \\ \hline
+\multicolumn{1}{|l|}{Rapport - TAD}                     & X                     & X              & X                     & X                     & X                      \\ \hline
+\multicolumn{1}{|l|}{Rapport - Conception Préliminaire} &                       & X              & X                     &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Rapport - Conception détaillée}    & X                     & X              & X                     & X                     & X                      \\ \hline
+\multicolumn{1}{|l|}{Rapport - Code C}                  & X                     &                &                       &                       &                        \\ \hline
+\multicolumn{1}{|l|}{Rapport - Cahier de suivi}         &                       & X              &                       &                       &                        \\ \hline
+\end{tabular}
+\end{table}
